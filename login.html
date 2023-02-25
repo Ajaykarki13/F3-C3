@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Portal</title>
+  </head>
+  <body>
+    <div
+      class="navbar"
+      style="
+        display: flex;
+        background-color: gray;
+        color: antiquewhite;
+        justify-content: space-between;
+        padding: 1rem;
+      "
+    >
+      <div>Teacher Portal</div>
+      <div>
+        <a
+          href="./index.html"
+          style="color: antiquewhite; text-decoration: none; margin-right: 10px"
+          >Signup</a
+        >
+        <a
+          href="./login.html"
+          style="color: antiquewhite; text-decoration: none; margin-right: 10px"
+          >Login</a
+        >
+      </div>
+    </div>
+    <br />
+
+    <h2 style="text-align: center">Teacher's Login</h2>
+    <br />
+
+    <form class="login">
+      <input id="email" type="email" placeholder="Email" required /><br /><br />
+      <input
+        id="pass"
+        type="password"
+        placeholder="Password"
+        required
+      /><br /><br />
+
+      <input id="login" type="submit" value="Login" />
+    </form>
+
+    <script>
+      let form = document.querySelector(".login");
+      let currentUser = [];
+
+      let email = document.querySelector("#email");
+      let password = document.querySelector("#pass");
+      let data = JSON.parse(localStorage.getItem("userinfo"));
+      console.log(data);
+
+      // LOGIN AND DIRECTING TO DASHBOARD PAGE
+
+      form.addEventListener("submit", dashPage);
+
+      function dashPage(e) {
+        e.preventDefault();
+        //data = JSON.parse(localStorage.getItem(userinfo))
+
+        if (
+          data[0].Email == email.value &&
+          data[0].Password == password.value
+        ) {
+          let tokenNumber = token(); //CALLING TOKEN GENERATING FUNCTION
+
+          //CURRENT USER
+           
+          newobj = {
+            Email: data[0].Email,
+            Password: data[0].Password,
+            Name: data[0].Name,
+            token: tokenNumber,
+          };
+          currentUser.push(newobj);
+          console.log(currentUser);
+          localStorage.setItem("newdata", JSON.stringify(currentUser));
+
+          window.location.href = "./dashboard.html";
+        }
+        else {alert('wrong credentials')}
+      }
+
+      //GENERATING TOKEN
+
+      function token() {
+        let char =
+          "qwertyuiopasdfghjklzxcvbnm1234567890MNBVCXZLKJHGFDSAPOIUYTRQWE";
+        let randomtoken = "";
+        for (let i = 0; i < 16; i++) {
+          let random = Math.floor(Math.random() * char.length);
+          randomtoken += char[random];
+        }
+        return randomtoken;
+      }
+    </script>
+     <script src="script.js"></script>
+  </body>
+</html>
