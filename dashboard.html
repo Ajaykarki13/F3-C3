@@ -1,117 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teacher Portal</title>
-  </head>
-  <body>
-    <div
-      class="navbar"
-      style="
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Portal</title>
+</head>
+
+<body>
+  <div class="navbar" style="
         display: flex;
         background-color: gray;
         color: antiquewhite;
         justify-content: space-between;
         padding: 1rem;
-      "
-    >
-      <div>Teacher Portal</div>
-      <div>
-        <a
-          href="./index.html"
-          style="color: antiquewhite; text-decoration: none; margin-right: 10px"
-          >Signup</a
-        >
-        <a
-          href="./login.html"
-          style="color: antiquewhite; text-decoration: none; margin-right: 10px"
-          >Login</a
-        >
-      </div>
+      ">
+    <div>Teacher Portal</div>
+    <div>
+      <a href="./index.html" style="color: antiquewhite; text-decoration: none; margin-right: 10px">Signup</a>
+      <a href="./login.html" style="color: antiquewhite; text-decoration: none; margin-right: 10px">Login</a>
     </div>
-    <br />
+  </div>
+  <br />
 
-    <h2 style="text-align: center">Teacher's Dashboard</h2>
-    <br />
+  <h2 style="text-align: center">Teacher's Dashboard</h2>
+  <br />
 
-    <div class="users"></div>
-    <br /><br />
-    <h2>Change Password</h2>
-    <br />
-    <form class="dash">
-      <input
-        id="pass1"
-        type="password"
-        placeholder="Old Password"
-        required
-      /><br /><br />
-      <input
-        id="pass2"
-        type="password"
-        placeholder="New Password"
-        required
-      /><br /><br />
-      <input
-        id="pass3"
-        type="password"
-        placeholder="Confirm New Password"
-        required
-      /><br /><br />
+  <div class="users"></div>
+  <br /><br />
+  <h2>Change Password here</h2>
+  <br />
+  <form class="dash">
+    <input id="pass1" type="password" placeholder="Old Password" required /><br /><br />
+    <input id="pass2" type="password" placeholder="New Password" required /><br /><br />
+    <input id="pass3" type="password" placeholder="Confirm New Password" required /><br /><br />
 
-      <button id="change">Change</button>
-    </form>
-    <br />
+    <button id="change">Change</button>
+  </form>
+  <br />
 
-    <button id="logout">Logout</button>
+  <button id="logout">Logout</button>
 
-    <script>
+  <script>
 
-      let form = document.querySelector(".dash");
-      // let btn1 = document.querySelector("#change")
-      let btn2 = document.querySelector("#logout");
+    let form = document.querySelector(".dash");
+    // let btn1 = document.querySelector("#change")
+    let btn2 = document.querySelector("#logout");
 
-      let oldpass = document.querySelector("#pass1");
-      let newpass = document.querySelector("#pass2");
-      let confpass = document.querySelector("#pass3");
+    let oldpass = document.querySelector("#pass1");
+    let newpass = document.querySelector("#pass2");
+    let confpass = document.querySelector("#pass3");
 
-      let data = JSON.parse(localStorage.getItem("newdata"));
-      console.log(data);
-      let user = document.querySelector(".users");
-      user.innerHTML = `Welcome : ${data[0].Name}<br><br> Your email-id : ${data[0].Email}<br>`;
+    let data = JSON.parse(localStorage.getItem("newdata"));
+    console.log(data);
 
-      //change password
+   
+    let user = document.querySelector(".users");
+    user.innerHTML = `Welcome : ${data[0].Name}<br><br> Your email-id : ${data[0].Email}<br>`;
 
-      form.addEventListener("submit", changePassword);
-      function changePassword(e) {
-        e.preventDefault();
-        if (
-          oldpass.value == data[0].Password &&
-          newpass.value == confpass.value
-        ) {
-          data[0].Password = newpass.value;
-          alert("Password changed");
-        } else if (
-          oldpass.value != data[0].Password ||
-          newpass.value != confpass.value
-        ) {
-          alert("wrong password");
-        }
+    //change password
+
+    form.addEventListener("submit", changePassword);
+    function changePassword(e) {
+      e.preventDefault();
+      if (( oldpass.value == data[0].Password &&newpass.value == confpass.value)&&(oldpass.value!=newpass.value)) {
+        data[0].Password = newpass.value;
+        
+        localStorage.setItem('newdata',JSON.stringify(data))
+
+        //editing the userinfo
+        
+let userinfo = JSON.parse(localStorage.getItem("userinfo"));
+console.log('userinfo')
+
+var allUsersExceptCurrent = userinfo.filter((x) =>{return  x.Email != data[0].Email});
+
+let userwithNewPassword = {Email : data[0].Email,Password:data[0].Password,Name:data[0].Name} 
+
+allUsersExceptCurrent.push(userwithNewPassword);
+
+localStorage.setItem("userinfo", JSON.stringify(allUsersExceptCurrent));
+
+        alert("Password changed");
+        console.log(allUsersExceptCurrent)
+      } else if (
+        oldpass.value != data[0].Password ||
+        newpass.value != confpass.value || oldpass.value == newpass.value
+      ) {
+        alert("wrong password");
       }
+    }
 
-      //LOGOUT
-      
-      btn2.addEventListener("click", logoutUser);
-      function logoutUser() {
+    //LOGOUT
 
-        window.localStorage.removeItem("newdata");
-       // window.localStorage.removeItem("userinfo");
+    btn2.addEventListener("click", logoutUser);
+    function logoutUser() {
+
+      window.localStorage.removeItem("newdata");
+      // window.localStorage.removeItem("userinfo");
       // window.localStorage.clear();
-        window.location.href = "./login.html";
+      window.location.href = "./login.html";
 
-      }
-    </script>
-    <!-- <script src="script.js"></script>-->
-  </body>
+    }
+  </script>
+  <!-- <script src="script.js"></script>-->
+</body>
+
 </html>

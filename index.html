@@ -1,64 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teacher Portal</title>
-  </head>
-  <body>
-    <div
-      class="navbar"
-      style="
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Portal</title>
+</head>
+
+<body>
+  <div class="navbar" style="
         display: flex;
         background-color: gray;
         color: antiquewhite;
         justify-content: space-between;
         padding: 1rem;
-      "
-    >
-      <div>Teacher Portal</div>
-      <div>
-        <a
-          href="./index.html"
-          style="color: antiquewhite; text-decoration: none; margin-right: 10px"
-          >Signup </a>
-        
-        <a
-          href="./login.html"
-          style="color: antiquewhite; text-decoration: none; margin-right: 10px"
-          >Login </a>
-        
-      </div>
+      ">
+    <div>Teacher Portal</div>
+    <div>
+      <a href="./index.html" style="color: antiquewhite; text-decoration: none; margin-right: 10px">Signup </a>
+
+      <a href="./login.html" style="color: antiquewhite; text-decoration: none; margin-right: 10px">Login </a>
+
     </div>
-    <br />
+  </div>
+  <br />
 
-    <h2 style="text-align: center">Teacher's Signup</h2>
-    <br />
-    <form class="signup">
-      <input
-        id="name"
-        type="text"
-        placeholder="Full Name"
-        required
-      /><br /><br />
-      <input id="email" type="email" placeholder="Email" required /><br /><br />
-      <input
-        id="pass"
-        type="password"
-        placeholder="Password"
-        required
-      /><br /><br />
-      <input
-        id="confirm"
-        type="password"
-        placeholder="Confirm Password"
-        required
-      /><br /><br />
-      <input id="signup" type="submit" value="Signup" />
-    </form>
+  <h2 style="text-align: center">Teacher's Signup</h2>
+  <br />
+  <form class="signup">
+    <input id="name" type="text" placeholder="Full Name" required /><br /><br />
+    <input id="email" type="email" placeholder="Email" required /><span id="error-message"></span><br /><br />
+    <input id="pass" type="password" placeholder="Password" required /><br /><br />
+    <input id="confirm" type="password" placeholder="Confirm Password" required /><br /><br />
+    <input id="signup" type="submit" value="Signup" />
+  </form>
 
-    <script src="index.js"></script>
-    <script src="script.js"></script>
-  </body>
+  <script src="index.js"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>

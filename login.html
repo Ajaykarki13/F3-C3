@@ -1,106 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teacher Portal</title>
-  </head>
-  <body>
-    <div
-      class="navbar"
-      style="
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Portal</title>
+</head>
+
+<body>
+  <div class="navbar" style="
         display: flex;
         background-color: gray;
         color: antiquewhite;
         justify-content: space-between;
         padding: 1rem;
-      "
-    >
-      <div>Teacher Portal</div>
-      <div>
-        <a
-          href="./index.html"
-          style="color: antiquewhite; text-decoration: none; margin-right: 10px"
-          >Signup</a
-        >
-        <a
-          href="./login.html"
-          style="color: antiquewhite; text-decoration: none; margin-right: 10px"
-          >Login</a
-        >
-      </div>
+      ">
+    <div>Teacher Portal</div>
+    <div>
+      <a href="./index.html" style="color: antiquewhite; text-decoration: none; margin-right: 10px">Signup</a>
+      <a href="./login.html" style="color: antiquewhite; text-decoration: none; margin-right: 10px">Login</a>
     </div>
-    <br />
+  </div>
+  <br />
 
-    <h2 style="text-align: center">Teacher's Login</h2>
-    <br />
+  <h2 style="text-align: center">Teacher's Login</h2>
+  <br />
 
-    <form class="login">
-      <input id="email" type="email" placeholder="Email" required /><br /><br />
-      <input
-        id="pass"
-        type="password"
-        placeholder="Password"
-        required
-      /><br /><br />
+  <form class="login">
+    <input id="email" type="email" placeholder="Email" required /><br /><br />
+    <input id="pass" type="password" placeholder="Password" required /><br /><br />
 
-      <input id="login" type="submit" value="Login" />
-    </form>
+    <input id="login" type="submit" value="Login" />
+  </form>
 
-    <script>
-      let form = document.querySelector(".login");
-      let currentUser = [];
+  <script>
+    let form = document.querySelector(".login");
+    let currentUser = [];
 
-      let email = document.querySelector("#email");
-      let password = document.querySelector("#pass");
-      let data = JSON.parse(localStorage.getItem("userinfo"));
-      console.log(data);
+    let email = document.querySelector("#email");
+    let password = document.querySelector("#pass");
 
-      // LOGIN AND DIRECTING TO DASHBOARD PAGE
+    let data = JSON.parse(localStorage.getItem("userinfo"));
+    console.log(data);
 
-      form.addEventListener("submit", dashPage);
+    // LOGIN AND DIRECTING TO DASHBOARD PAGE
 
-      function dashPage(e) {
-        e.preventDefault();
-        //data = JSON.parse(localStorage.getItem(userinfo))
+    form.addEventListener("submit", dashPage);
 
-        if (
-          data[0].Email == email.value &&
-          data[0].Password == password.value
-        ) {
-          let tokenNumber = token(); //CALLING TOKEN GENERATING FUNCTION
+    function dashPage(e) {
+      e.preventDefault();
+      //data = JSON.parse(localStorage.getItem(userinfo))
+      let current = data.filter((x)=>{ return x.Email==email.value})
+      console.log(current)
+      if((current.length>0 && current.length<2)&&(current[0].Email==email.value && current[0].Password==password.value))
+ //for(let i=0;i<data.length;i++){
+     // if ( data[i].Email == email.value && data[i].Password == password.value)
+       {
+        let tokenNumber = token(); //CALLING TOKEN GENERATING FUNCTION
 
-          //CURRENT USER
-           
-          newobj = {
-            Email: data[0].Email,
-            Password: data[0].Password,
-            Name: data[0].Name,
-            token: tokenNumber,
-          };
-          currentUser.push(newobj);
-          console.log(currentUser);
-          localStorage.setItem("newdata", JSON.stringify(currentUser));
+        //CURRENT USER
 
-          window.location.href = "./dashboard.html";
-        }
-        else {alert('wrong credentials')}
+        newobj = {
+          Email: current[0].Email,
+          Password: current[0].Password,
+          Name: current[0].Name,
+          token: tokenNumber,
+        };
+        currentUser.push(newobj);
+        console.log(currentUser);
+        localStorage.setItem("newdata", JSON.stringify(currentUser));
+        window.location.href = "./dashboard.html";
       }
+      else{alert('wrong credentials') ;}
+     // else if(data[data.length].Email !== email.value && data[i].Password !== password.value)
+    // if( current.length>1||current.length==0 && email.value!=password.value)
+     //  { alert('wrong credentials') ; }
+    }
+  //}
+    //GENERATING TOKEN
 
-      //GENERATING TOKEN
-
-      function token() {
-        let char =
-          "qwertyuiopasdfghjklzxcvbnm1234567890MNBVCXZLKJHGFDSAPOIUYTRQWE";
-        let randomtoken = "";
-        for (let i = 0; i < 16; i++) {
-          let random = Math.floor(Math.random() * char.length);
-          randomtoken += char[random];
-        }
-        return randomtoken;
+    function token() {
+      let char =
+        "qwertyuiopasdfghjklzxcvbnm1234567890MNBVCXZLKJHGFDSAPOIUYTRQWE";
+      let randomtoken = "";
+      for (let i = 0; i < 16; i++) {
+        let random = Math.floor(Math.random() * char.length);
+        randomtoken += char[random];
       }
-    </script>
-     <script src="script.js"></script>
-  </body>
+      return randomtoken;
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+
 </html>
